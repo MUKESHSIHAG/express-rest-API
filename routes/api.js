@@ -4,7 +4,13 @@ const Mukesh = require("./models/mukesh")
 
 //Handling requests
 router.get("/mukesh", function(req,res,next){
-    res.send({type: "get"});
+    //res.send({type: "get"});
+    Mukesh.geoNear(
+        {type: "Point", coordinates: [parseFloat(req.query.lng),parseFloat(req.query.let)]},
+        {maxDistance: 1000000, spherical: true}
+    ).then(function(mukesh){
+        res.send(mukesh);
+    });
 });
 
 router.post("/mukesh", function(req,res,next){
@@ -14,11 +20,17 @@ router.post("/mukesh", function(req,res,next){
 });
 
 router.put("/mukesh/:id", function(req,res,next){
-    res.send({type: "PUT"});
+    Mukesh.findOneAndUpdate({_id: req.paramas.body}, req.body).then(function(){
+        Mukesh.findOne({_id: req.params.id}).then(function(mukesh){
+            res.send(mukesh);
+        });
+    });
 });
 
 router.delete("/mukesh", function(req,res,next){
-    res.send({type: "DELETE"});
+    Mukesh.findByIdAndRemove({_id: req.params.id}).then(function(mukesh){
+        res.send(mukesh);
+    })
 });
 
 //exporting modules

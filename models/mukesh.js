@@ -1,6 +1,18 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+//create geolocation Schema
+const GeoSchema = new Schema({
+    type: {
+        type: String,
+        default: "Point"
+    },
+    coordinate: {
+        type: [number],
+        index: "2dsphere"
+    }
+});
+
 //create mukesh schema and models
 const MukeshSchema = new Schema({
     name: {
@@ -13,9 +25,8 @@ const MukeshSchema = new Schema({
     available: {
         type: Boolean,
         default: false
-    }
-
-    //add inn geo locationn
+    },
+    geometry: GeoSchema
 });
 
 const Mukesh = mongoose.model("Mukesh", MukeshSchema);
