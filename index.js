@@ -7,7 +7,7 @@ const mongoose = require("mongoose");
 const app = express();
 
 //connect to mongodb
-mongoose.connect("mongodb://localhost//mukesh");
+mongoose.connect("mongodb://mukeshsihag:mukesh22@ds143511.mlab.com:43511/rest");
 mongoose.Promise = global.Promise;
 
 app.use(bodyParser.json());
